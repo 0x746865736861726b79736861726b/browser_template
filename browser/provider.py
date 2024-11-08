@@ -1,7 +1,8 @@
 from typing import List
 
 from fake_useragent import UserAgent
-from playwright.async_api import async_playwright
+
+from patchright.async_api import async_playwright
 
 from browser.interfaces.abstract import BrowserInterface
 
@@ -23,7 +24,7 @@ class PlaywrightBrowser(BrowserInterface):
 
         self._playwright = await async_playwright().start()
         self._browser = await self._playwright.chromium.launch(
-            headless=False,
+            headless=True,
             args=[
                 "--disable-blink-features=AutomationControlled",
                 "--disable-web-security",
