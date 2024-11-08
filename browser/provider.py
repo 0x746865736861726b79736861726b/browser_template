@@ -9,7 +9,6 @@ from browser.interfaces.abstract import BrowserInterface
 
 class PlaywrightBrowser(BrowserInterface):
     def __init__(self, extensions: List[str] = None):
-        # super().__init__()
         self._playwright = None
         self._browser = None
         self._context = None
@@ -24,7 +23,7 @@ class PlaywrightBrowser(BrowserInterface):
 
         self._playwright = await async_playwright().start()
         self._browser = await self._playwright.chromium.launch(
-            headless=True,
+            headless=False,
             args=[
                 "--disable-blink-features=AutomationControlled",
                 "--disable-web-security",
@@ -35,7 +34,7 @@ class PlaywrightBrowser(BrowserInterface):
                 "--disable-extensions",
                 "--disable-software-rasterizer",
                 "--lang=en-US",
-                extensions_arg,
+                f"--load-extension={extensions_arg}" if extensions_arg else "",
             ],
         )
         self._context = await self._browser.new_context(
