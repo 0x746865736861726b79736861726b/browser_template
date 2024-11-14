@@ -7,7 +7,7 @@ class InstagramPage(BasePage):
         await self.page.goto(url)
 
     async def signup(self):
-        await self.page.locator("//section/main/article//span/p/a").click()
+        await self.click_element("//section/main/article//span/p/a")
         await self.page.wait_for_load_state("networkidle")
         await self.page.is_visible("//input[@name='emailOrPhone']")
         await self.page.click("//input[@name='emailOrPhone']")

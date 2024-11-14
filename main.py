@@ -3,34 +3,30 @@ from browser.facade import BrowserFacade
 from browser.pages.gmail import GmailPage
 from browser.pages.google import GooglePage
 from browser.pages.instagram import InstagramPage
+from exceptions.handler import ExceptionHandler
 
 
 async def main():
-    extesions_path = [
-        "extensions/WebRTC-Leak-Shield-Chrome.crx",
-    ]
-    browser_facade = BrowserFacade(browser_type="playwright", extensions=extesions_path)
-    await browser_facade.start_browser()
-    # page = await browser_facade._provider.get_page()
-    # page_actions = GooglePage(page)
-    # await page_actions.navigate_to_url("https://www.google.com/")
-    # await page_actions.get_screenshot()
-    page = await browser_facade._provider.get_page()
-    # page_actions = InstagramPage(page)
-    # await page_actions.open_page("https://instagram.com/")
-    # await page_actions.signup()
+    # extesions_path = [
+    #     "extensions/WebRTC-Leak-Shield-Chrome.crx",
+    # ]
+    try:
+        browser_facade = BrowserFacade(browser_type="playwright")
+        await browser_facade.start_browser()
+        page = await browser_facade._provider.get_page()
+        page_actions = GmailPage(page)
+        await page_actions.open_page("https://gmail.com/")
+        await page_actions.signup()
+        # await browser_facade.open_page("https://bot.sannysoft.com")
+        await asyncio.sleep(20)
+    except Exception as e:
+        # Створення обробника помилок
+        exception_handler = ExceptionHandler(page)
+        await exception_handler.handle(e)
 
-    page_actions = GmailPage(page)
-    await page_actions.open_page("https://gmail.com/")
-    await page_actions.signup()
-
-    # await browser_facade.open_page("https://google.com/")
-    # await browser_facade.open_page("https://instagram.com/")
-    # await browser_facade.open_page("https://bot.sannysoft.com")
-    await asyncio.sleep(20)
-    await browser_facade.take_screenshot("screenshots/screenshot.png")
-
-    await browser_facade.close_browser()
+    finally:
+        # Закриття браузера після всіх дій
+        await browser_facade.close_browser()
 
 
 asyncio.run(main())
