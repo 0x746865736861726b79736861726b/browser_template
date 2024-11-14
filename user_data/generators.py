@@ -29,7 +29,5 @@ class UserDataGenerator:
         password = self.generate_password()
         return {
             "name": name,
-            "last_name": last_name,
-            "email": email,
             "password": password,
         }

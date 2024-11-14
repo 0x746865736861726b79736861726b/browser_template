@@ -17,7 +17,7 @@ class ExceptionHandler:
         if self.page:
             timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             screenshot_path = os.path.join(
-                "screenshots/errors", f"error_{timestamp}.png"
+                "screenshots/errors", f"error_{timestamp}_{error_message}.png"
             )
             await self.page.screenshot(path=screenshot_path)
             logger.info(f"Screenshot saved: {screenshot_path}")

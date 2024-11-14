@@ -1,9 +1,11 @@
 import asyncio
+
 from browser.facade import BrowserFacade
 from browser.pages.gmail import GmailPage
-from browser.pages.google import GooglePage
-from browser.pages.instagram import InstagramPage
 from exceptions.handler import ExceptionHandler
+from user_data.generators import UserDataGenerator
+from user_data.saver import CSVSaver
+from user_data.service import UserDataService
 
 
 async def main():
